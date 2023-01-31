@@ -23,6 +23,7 @@ gem 'puma', '~> 5.0'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 gem 'devise-jwt'
+gem 'mini_magick', '~> 4.12'
 gem 'rack-cors'
 gem 'dotenv-rails', groups: [:development, :test]
 
