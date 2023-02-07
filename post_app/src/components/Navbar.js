@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY3NTY4MTEyNCwiZXhwIjoxNjc2OTc3MTI0LCJqdGkiOiJjMjhiMDkxNy0yY2VhLTQ0NmQtYjM4MC1kNmYxZmZmMDUyY2QifQ.H4NfSbs7HXLPmItBZVMLmENnup2kENe6cp3QavLcz1k'
 export default function Navbar() {
-  // const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY3NTY4MTEyNCwiZXhwIjoxNjc2OTc3MTI0LCJqdGkiOiJjMjhiMDkxNy0yY2VhLTQ0NmQtYjM4MC1kNmYxZmZmMDUyY2QifQ.H4NfSbs7HXLPmItBZVMLmENnup2kENe6cp3QavLcz1k'
   const navigate = useNavigate();
+  const authToken = localStorage.getItem('Token');
   const signout = (event) => {
     event.preventDefault();
     console.log("inside signout");
@@ -35,23 +34,25 @@ export default function Navbar() {
             <li className="nav-item">
               <Link to="/posts" className='nav-link'>Posts</Link>
             </li>
-            <li className="nav-item dropdown">
+            {/* <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              </a> */}
+              {/* <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a className="dropdown-item" href="#">Action</a></li>
                 <li><a className="dropdown-item" href="#">Another action</a></li>
                 <li><hr className="dropdown-divider" /></li>
                 <li><a className="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-            <li className="nav-item">
+              </ul> */}
+            {/* </li> */}
+            {/* <li className="nav-item">
               <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-            <li className="nav-item">
-              <button className="btn btn-primary" onClick={signout}>Sign Out</button>
-            </li>
+            </li> */}
+            {authToken &&
+              <li className="nav-item">
+                <button className="btn btn-primary" onClick={signout}>Sign Out</button>
+              </li>
+            }
           </ul>
           <form className="d-flex">
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />

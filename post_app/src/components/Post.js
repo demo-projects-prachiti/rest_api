@@ -21,21 +21,12 @@ export default function Post() {
 
     return (
         <div className='container'>
-            {/* <div className='row'> */}
             <table>
                 <tr>
                     <td>Title</td>
                     <td>Description</td>
                 </tr>
                 {postData.map((post) => (
-                    // <div className="col-sm-4 card" style={{ width: '18rem' }}>
-                    //     <img src={post.avatar} className="card-img-top" alt="" width={200} height={150}/>
-                    //     <div className="card-body">
-                    //         <h5 className="card-title">{post.title}</h5>
-                    //         <p className="card-text">{post.description}</p>
-                    //         {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
-                    //     </div>
-                    // </div>
                     <tr key={post.id}>
                         <td>{post.title}</td>
                         <td>{post.description}</td>
@@ -45,7 +36,6 @@ export default function Post() {
 
                 ))}
             </table>
-            {/* </div> */}
             <Link to="/addpost" className='btn btn-primary'>Add Post</Link>
 
         </div>

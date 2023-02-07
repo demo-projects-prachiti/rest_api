@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
     let [user, setUser] = useState({ email: '', password: '' })
+    const navigate = useNavigate();
     const handler = (event) => {
         const { name, value } = event.target;
         setUser({ ...user, [name]: value })
@@ -11,20 +13,20 @@ export default function SignUp() {
     const userData = (event) => {
         event.preventDefault();
         console.log(user)
-        axios.post('http://localhost:3000/users', {}, {params: {
-            'user': { user }}
+        axios.post('http://localhost:3000/users', {}, {
+            params: {
+                'user': { user }
+            }
         })
             .then(res => {
-                alert("Resonpse added")
                 if (res.data) {
-                    alert("User added");
-                    // navigate("/")
+                    navigate("/posts")
                 }
             })
     }
     return (
-        <div className="container mx-auto" style={{width: "400px"}}>
-            Sign Up
+        <div className="container mx-auto" style={{ width: "400px" }}>
+            <h2>Sign Up</h2>
             <form onSubmit={userData}>
                 <div className='form-group'>
                     <label>Email:</label>
@@ -34,13 +36,13 @@ export default function SignUp() {
                     <label>Password:</label>
                     <input type="text" name="password" className="form-control" onChange={handler}></input>
                 </div>
-                <br/>
+                <br />
                 <div className='form-group'>
                     <input type="submit" value="Sign Up" className='btn btn-success'></input>
                 </div>
             </form >
-            <br/>
-            <Link to="/signin" className='btn btn-primary'>Sign In</Link>
+            <br />
+            <Link to="/">Sign In</Link>
         </div >
     )
 }
