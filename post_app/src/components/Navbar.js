@@ -8,11 +8,8 @@ export default function Navbar() {
   const authToken = localStorage.getItem('Token');
   const signout = (event) => {
     event.preventDefault();
-    console.log("inside signout");
-    console.log(`Bearer ${localStorage.getItem('Token')}`);
     axios.delete('http://localhost:3000/users/sign_out', { headers: { Authorization: `${localStorage.getItem('Token')}` } })
       .then(res => {
-        alert("signed out")
         if (res.data) {
           localStorage.removeItem('Token');
           navigate("/")
@@ -31,22 +28,8 @@ export default function Navbar() {
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            <li className="nav-item">
-              <Link to="/posts" className='nav-link'>Posts</Link>
-            </li>
-            {/* <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a> */}
-              {/* <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
-              </ul> */}
-            {/* </li> */}
             {/* <li className="nav-item">
-              <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              <Link to="/posts" className='nav-link'>Posts</Link>
             </li> */}
             {authToken &&
               <li className="nav-item">

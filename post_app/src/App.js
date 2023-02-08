@@ -6,6 +6,7 @@ import AddPost from './components/AddPost';
 import Navbar from './components/Navbar';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
+import EditPost from './components/EditPost';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/posts" element={<Post />} />
           <Route path="/addpost" element={<AddPost />} />
           <Route path="/signup" element={<SignUp/>} />
+          <Route path="/editpost/:id" element={<EditPost/>} />
         </Routes>
       </Router>
     </div>

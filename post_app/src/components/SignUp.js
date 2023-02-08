@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
     let [user, setUser] = useState({ email: '', password: '' })
+    const [error, setError] = useState([]);
     const navigate = useNavigate();
     const handler = (event) => {
         const { name, value } = event.target;
@@ -12,8 +13,19 @@ export default function SignUp() {
     }
     const userData = (event) => {
         event.preventDefault();
+        const codes = []
+        if (user.email == "") {
+            codes.push('Email is required')
+        }
+        if (user.password == "") {
+            codes.push('Password is required')
+        }
+        else if ((user.password).length > 128 || (user.password).length < 6) {
+            codes.push('Password must be between 6 to 128')
+        }
         console.log(user)
-        axios.post('http://localhost:3000/users', {}, {
+        if (codes.length === 0) {
+            axios.post('http://localhost:3000/users', {}, {
             params: {
                 'user': { user }
             }
@@ -23,10 +35,15 @@ export default function SignUp() {
                     navigate("/posts")
                 }
             })
+        }
+        setError(codes);
     }
     return (
         <div className="container mx-auto" style={{ width: "400px" }}>
             <h2>Sign Up</h2>
+            {error.length !== 0 && error.map((err) => (
+                <div key={err}>{err}</div>
+            ))}
             <form onSubmit={userData}>
                 <div className='form-group'>
                     <label>Email:</label>

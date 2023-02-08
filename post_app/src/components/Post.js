@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-// const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY3NTY4MTEyNCwiZXhwIjoxNjc2OTc3MTI0LCJqdGkiOiJjMjhiMDkxNy0yY2VhLTQ0NmQtYjM4MC1kNmYxZmZmMDUyY2QifQ.H4NfSbs7HXLPmItBZVMLmENnup2kENe6cp3QavLcz1k'
 export default function Post() {
     const [postData, setPostData] = useState([]);
+    const navigate = useNavigate();
     const getToken = () => {
         return localStorage.getItem('Token')
     }
@@ -12,12 +13,19 @@ export default function Post() {
         const API = "http://localhost:3000/api/v1/posts";
         axios.get(API, { headers: { Authorization: `${getToken()}` } })
             .then(res => {
-                console.log(res.data)
                 setPostData(res.data)
             })
             .catch(err => console.log(err))
     }, [])
-
+    const deletePost = (id) => {
+        const API_URL = "http://localhost:3000/api/v1/posts/"
+        axios.delete(`${API_URL}${id}`, { headers: { Authorization: `${localStorage.getItem('Token')}` } })
+            .then(res => {
+                let data=postData.filter(post=>post.id!=id);
+                setPostData(data);
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <div className='container'>
@@ -30,14 +38,14 @@ export default function Post() {
                     <tr key={post.id}>
                         <td>{post.title}</td>
                         <td>{post.description}</td>
-                        <span />
-                        <Link to={`editpost/${post.id}`} className='btn btn-primary'>Edit</Link>
+                        <td><Link to={`/editpost/${post.id}`} className='btn btn-primary'>Edit</Link>
+                        <button className='btn btn-primary' onClick={() => deletePost(post.id)}>Delete</button></td>
+                        <td><img src={post.avatar}/></td>
                     </tr>
 
                 ))}
             </table>
             <Link to="/addpost" className='btn btn-primary'>Add Post</Link>
-
         </div>
     )
 }
