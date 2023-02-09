@@ -15,13 +15,13 @@ export default function SignIn() {
     const userData = (event) => {
         event.preventDefault();
         const codes = []
-        // const emailRegex = /\A[^@\s]+@[^@\s]+\z/;
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if (user.email == "") {
             codes.push('Email is required')
         }
-        // else if (!(user.email).match(emailRegex)) {
-        //     codes.push('Email is not in the format.')
-        // }
+        else if (!(user.email).match(emailRegex)) {
+            codes.push('Email is not in the format.')
+        }
         if (user.password == "") {
             codes.push('Password is required')
         }
@@ -32,13 +32,16 @@ export default function SignIn() {
             axios.post("http://localhost:3000/users/sign_in", { user })
                 .then(res => {
                     localStorage.setItem('Token', res.headers.authorization);
-                    if (res.data) {
+                    if (res.status === 200) {
                         alert("User Signed in");
                         navigate("/posts")
                     }
+                    else {
+                        codes.push('Credentials does not match.')
+                        navigate("/")
+                    }
                 })
-
-
+                .catch(err => console.log(err))
         }
         setError(codes);
     }

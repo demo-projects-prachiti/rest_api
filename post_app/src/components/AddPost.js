@@ -15,6 +15,7 @@ export default function AddPost() {
         axios.post('http://localhost:3000/api/v1/posts', { post:state}, { headers: { Authorization: `${localStorage.getItem('Token')}`,"Content-Type":"multipart/form-data" } })
             .then(res => {
                 if (res.data) {
+                    setState({...state, avatar: res?.data?.url});
                     navigate("/posts")
                 }
             })
@@ -23,7 +24,7 @@ export default function AddPost() {
         setState((prev) => ({ ...prev, avatar: event.target.files[0] }))
     }
     return (
-        <div className="container">Add Post
+        <div className="container mx-auto" >Add Post
             <form onSubmit={postData}>
                 <div className='form-group'>
                     <label>Title:</label>
@@ -37,6 +38,7 @@ export default function AddPost() {
                     <label>Avatar:</label>
                     <input type="file" name="avatar" className="form-control" onChange={fileHandler}></input>
                 </div>
+                <br/>
                 <input type="submit" value="Add" className='btn btn-success'></input>
             </form>
         </div>

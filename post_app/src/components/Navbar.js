@@ -28,13 +28,15 @@ export default function Navbar() {
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            {/* <li className="nav-item">
-              <Link to="/posts" className='nav-link'>Posts</Link>
-            </li> */}
             {authToken &&
-              <li className="nav-item">
-                <button className="btn btn-primary" onClick={signout}>Sign Out</button>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link to="/posts" className='nav-link'>Posts</Link>
+                </li>
+                <li className="nav-item">
+                  <button className="btn btn-primary" onClick={signout}>Sign Out</button>
+                </li>
+              </>
             }
           </ul>
           <form className="d-flex">

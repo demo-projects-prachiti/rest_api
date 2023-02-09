@@ -33,14 +33,18 @@ export default function Post() {
                 <tr>
                     <td>Title</td>
                     <td>Description</td>
+                    <td>Avatar</td>
                 </tr>
                 {postData.map((post) => (
-                    <tr key={post.id}>
-                        <td>{post.title}</td>
-                        <td>{post.description}</td>
-                        <td><Link to={`/editpost/${post.id}`} className='btn btn-primary'>Edit</Link>
-                        <button className='btn btn-primary' onClick={() => deletePost(post.id)}>Delete</button></td>
-                        <td><img src={post.avatar}/></td>
+                    // <tr><h2>{post}</h2></tr>
+                    <tr key={post.post.id}>
+                        {/* <td>{post}</td> */}
+                        <td>{post.post.title}</td>
+                        <td>{post.post.description}</td>
+                        <td><img src={post.url} width={150} height={150}/></td>
+                        <td><Link to={`/editpost/${post.post.id}`} className='btn btn-primary'>Edit</Link>
+                        <button className='btn btn-primary' onClick={() => deletePost(post.post.id)}>Delete</button></td>
+                        
                     </tr>
 
                 ))}

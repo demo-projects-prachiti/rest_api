@@ -3,11 +3,14 @@ class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: [:show, :update, :destroy]
 
   # GET /posts
-  def index
-    @posts = Post.all
-
-    render json: @posts
+  
+def index
+  @posts = Post.all
+  @posts_with_urls = @posts.map do |post|
+    { post: post, url: url_for(post.avatar) }
   end
+  render json: @posts_with_urls
+end
 
   # GET /posts/1
   def show
