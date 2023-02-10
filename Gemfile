@@ -26,6 +26,7 @@ gem 'devise-jwt'
 gem 'mini_magick', '~> 4.12'
 gem 'rack-cors'
 gem 'dotenv-rails', groups: [:development, :test]
+# gem 'fast_jsonapi'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
