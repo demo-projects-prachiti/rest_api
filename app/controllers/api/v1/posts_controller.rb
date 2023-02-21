@@ -10,6 +10,7 @@ def index
     { post: post, url: url_for(post.avatar) }
   end
   render json: @posts_with_urls
+  # render json: @posts
 end
 
   # GET /posts/1

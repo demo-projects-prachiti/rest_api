@@ -31,26 +31,22 @@ export default function SignIn() {
         if (codes.length === 0) {
             axios.post("http://localhost:3000/users/sign_in", { user })
                 .then(res => {
-                    console.log("inside response of then")
                     localStorage.setItem('Token', res.headers.authorization);
                     if (res.status === 200) {
                         alert("User Signed in");
                         navigate("/posts")
                     }
-                    else {
-                        console.log("Credentials does not match");
-                        codes.push('Credentials does not match.')
-                        console.log("codes"+codes)
+                })
+                .catch(err => {
+                    if(err.response.status === 401){
+                        codes.push(err.response.data)
                         setError(codes);
-                        navigate("/")
                     }
                 })
-                .catch(err => console.log(err))
         }
-        console.log("after length")
+        else{
         setError(codes);
-        console.log("Error"+error);
-        console.log("after set code")
+        }
     }
     return (
         <div className="container mx-auto" style={{ width: "400px" }}>

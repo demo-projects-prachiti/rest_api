@@ -1,6 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  respond_to :json
-  private
+   private
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
@@ -14,11 +13,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
       }, status: :unprocessable_entity
     end
   end
-  
-  # def register_success
-  #   render json: { message: 'Signed up.' }
-  # end
-  # def register_failed
-  #   render json: { message: "Signed up failure." }
-  # end
 end

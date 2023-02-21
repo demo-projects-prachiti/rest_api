@@ -12,6 +12,10 @@ export default function AddPost() {
     const postData = (event) => {
         event.preventDefault();
         console.log("State params"+state)
+        if(state.avatar == "")
+        {
+            delete state.avatar
+        }
         axios.post('http://localhost:3000/api/v1/posts', { post:state}, { headers: { Authorization: `${localStorage.getItem('Token')}`,"Content-Type":"multipart/form-data" } })
             .then(res => {
                 if (res.data) {

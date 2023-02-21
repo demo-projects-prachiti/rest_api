@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
-    let [user, setUser] = useState({ email: '', password: '' })
+    let [user, setUser] = useState({ email: '', password: '', password_confirmation: '' })
     const [error, setError] = useState([]);
     const navigate = useNavigate();
     const handler = (event) => {
@@ -20,28 +20,33 @@ export default function SignUp() {
         if (user.password == "") {
             codes.push('Password is required')
         }
+        if (user.password_confirmation == "") {
+            codes.push('Confirm Password is required')
+        }
         else if ((user.password).length > 128 || (user.password).length < 6) {
             codes.push('Password must be between 6 to 128')
         }
-        console.log(user)
         if (codes.length === 0) {
-            axios.post('http://localhost:3000/users', {}, {
-            params: {
-                'user': { user }
-            }
-        })
-            .then(res => {
-                if (res.data) {
-                    navigate("/posts")
-                }
-            })
+            axios.post('http://localhost:3000/users', { user })
+                .then(res => {
+                    if (res.data) {
+                        navigate("/")
+                    }
+                })
+                .catch(err => {
+                    codes.push(err.response.data.status.message);
+                    setError(codes);
+
+                })
+        } else {
+            setError(codes);
         }
-        setError(codes);
     }
+    console.log(error)
     return (
         <div className="container mx-auto" style={{ width: "400px" }}>
             <h2>Sign Up</h2>
-            {error.length !== 0 && error.map((err) => (
+            {error.map((err) => (
                 <div key={err}>{err}</div>
             ))}
             <form onSubmit={userData}>
@@ -52,6 +57,10 @@ export default function SignUp() {
                 <div className='form-group'>
                     <label>Password:</label>
                     <input type="text" name="password" className="form-control" onChange={handler}></input>
+                </div>
+                <div className='form-group'>
+                    <label>Confirm Password:</label>
+                    <input type="text" name="password_confirmation" className="form-control" onChange={handler}></input>
                 </div>
                 <br />
                 <div className='form-group'>

@@ -11,7 +11,8 @@ export default function Post() {
     }
     useEffect(() => {
         const API = "http://localhost:3000/api/v1/posts";
-        axios.get(API, { headers: { Authorization: `${getToken()}` } })
+        console.log("token in use effect" + localStorage.getItem('Token'))
+        axios.get(API, { headers: { Authorization: `${localStorage.getItem('Token')}` } })
             .then(res => {
                 setPostData(res.data)
             })
@@ -21,7 +22,7 @@ export default function Post() {
         const API_URL = "http://localhost:3000/api/v1/posts/"
         axios.delete(`${API_URL}${id}`, { headers: { Authorization: `${localStorage.getItem('Token')}` } })
             .then(res => {
-                let data=postData.filter(post=>post.id!=id);
+                let data = postData.filter(post => post.id != id);
                 setPostData(data);
             })
             .catch(err => console.log(err))
@@ -41,10 +42,10 @@ export default function Post() {
                         {/* <td>{post}</td> */}
                         <td>{post.post.title}</td>
                         <td>{post.post.description}</td>
-                        <td><img src={post.url} width={150} height={150}/></td>
+                        <td><img src={post.url} width={150} height={150} /></td>
                         <td><Link to={`/editpost/${post.post.id}`} className='btn btn-primary'>Edit</Link>
-                        <button className='btn btn-primary' onClick={() => deletePost(post.post.id)}>Delete</button></td>
-                        
+                            <button className='btn btn-primary' onClick={() => deletePost(post.post.id)}>Delete</button></td>
+
                     </tr>
 
                 ))}
