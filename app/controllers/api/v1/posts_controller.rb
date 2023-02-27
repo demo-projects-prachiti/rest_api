@@ -1,5 +1,5 @@
 class Api::V1::PostsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_post, only: [:show, :update, :destroy]
 
   # GET /posts
@@ -7,10 +7,13 @@ class Api::V1::PostsController < ApplicationController
 def index
   @posts = Post.all
   @posts_with_urls = @posts.map do |post|
+    if post.avatar.attached?
     { post: post, url: url_for(post.avatar) }
+    else
+       { post: post,url: ""}
+    end
   end
   render json: @posts_with_urls
-  # render json: @posts
 end
 
   # GET /posts/1
@@ -20,6 +23,7 @@ end
 
   # POST /posts
   def create
+    byebug
     @post = Post.new(post_params)
 
     if @post.save

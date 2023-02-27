@@ -42,7 +42,7 @@ export default function Post() {
                         {/* <td>{post}</td> */}
                         <td>{post.post.title}</td>
                         <td>{post.post.description}</td>
-                        <td><img src={post.url} width={150} height={150} /></td>
+                        {post.url ? <td><img src={post.url} width={150} height={150} /></td> :<td></td>}
                         <td><Link to={`/editpost/${post.post.id}`} className='btn btn-primary'>Edit</Link>
                             <button className='btn btn-primary' onClick={() => deletePost(post.post.id)}>Delete</button></td>
 
