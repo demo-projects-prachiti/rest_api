@@ -42,7 +42,6 @@ export default function SignUp() {
             setError(codes);
         }
     }
-    console.log(error)
     return (
         <div className="container mx-auto" style={{ width: "400px" }}>
             <h2>Sign Up</h2>

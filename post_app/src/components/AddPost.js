@@ -11,7 +11,6 @@ export default function AddPost() {
     }
     const postData = (event) => {
         event.preventDefault();
-        console.log("State params"+state)
         if(state.avatar == "")
         {
             delete state.avatar

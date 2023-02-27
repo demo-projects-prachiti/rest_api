@@ -11,7 +11,6 @@ export default function Post() {
     }
     useEffect(() => {
         const API = "http://localhost:3000/api/v1/posts";
-        console.log("token in use effect" + localStorage.getItem('Token'))
         axios.get(API, { headers: { Authorization: `${localStorage.getItem('Token')}` } })
             .then(res => {
                 setPostData(res.data)
@@ -37,12 +36,10 @@ export default function Post() {
                     <td>Avatar</td>
                 </tr>
                 {postData.map((post) => (
-                    // <tr><h2>{post}</h2></tr>
                     <tr key={post.post.id}>
-                        {/* <td>{post}</td> */}
                         <td>{post.post.title}</td>
                         <td>{post.post.description}</td>
-                        {post.url ? <td><img src={post.url} width={150} height={150} /></td> :<td></td>}
+                        {post.url ? <td><img src={post.url} width={150} height={150} /></td> : <td></td>}
                         <td><Link to={`/editpost/${post.post.id}`} className='btn btn-primary'>Edit</Link>
                             <button className='btn btn-primary' onClick={() => deletePost(post.post.id)}>Delete</button></td>
 
