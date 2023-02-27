@@ -14,23 +14,37 @@ export default function SignUp() {
     const userData = (event) => {
         event.preventDefault();
         const codes = []
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if (user.email == "") {
             codes.push('Email is required')
+        }
+        else if (!(user.email).match(emailRegex)) {
+            codes.push('Email is not in the format.')
         }
         if (user.password == "") {
             codes.push('Password is required')
         }
-        if (user.password_confirmation == "") {
-            codes.push('Confirm Password is required')
-        }
         else if ((user.password).length > 128 || (user.password).length < 6) {
             codes.push('Password must be between 6 to 128')
+        }
+        if (user.password != "" && user.password_confirmation == "") {
+            codes.push('Confirm Password is required')
         }
         if (codes.length === 0) {
             axios.post('http://localhost:3000/users', { user })
                 .then(res => {
                     if (res.data) {
-                        navigate("/")
+                        console.log("Res data" + res.data.status.message);
+                        // setError(codes);
+                        if (window.confirm("Signed up successfully!") == true) {
+                            document.getElementById("sign-up-form").reset();
+                            navigate("/")
+                        } else {
+                            document.getElementById("sign-up-form").reset();
+                            codes.push(res.data.status.message);
+                            setError(codes);
+                            navigate("/signup")
+                        }
                     }
                 })
                 .catch(err => {
@@ -48,7 +62,7 @@ export default function SignUp() {
             {error.map((err) => (
                 <div key={err}>{err}</div>
             ))}
-            <form onSubmit={userData}>
+            <form id="sign-up-form" onSubmit={userData}>
                 <div className='form-group'>
                     <label>Email:</label>
                     <input type="text" name="email" className="form-control" onChange={handler}></input>
