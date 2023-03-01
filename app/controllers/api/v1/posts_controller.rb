@@ -8,9 +8,9 @@ def index
   @posts = Post.all
   @posts_with_urls = @posts.map do |post|
     if post.avatar.attached?
-    { post: post, url: url_for(post.avatar) }
+      { post: post, url: url_for(post.avatar), user: post.user.email }
     else
-       { post: post,url: ""}
+       { post: post,url: "", user: post.user.email }
     end
   end
   render json: @posts_with_urls
@@ -23,7 +23,7 @@ end
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
 
     if @post.save
       render json: @post, status: :created
@@ -44,6 +44,8 @@ end
   # DELETE /posts/1
   def destroy
     @post.destroy
+    render json: {
+      status: {code: 204, message: 'Post deleted sucessfully.'}}
   end
 
   private
@@ -54,6 +56,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :description, :avatar)
+      params.require(:post).permit(:title, :description, :avatar, :user_id)
     end
 end

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
-    let [user, setUser] = useState({ email: '', password: '', password_confirmation: '' })
+    const [user, setUser] = useState({ email: '', password: '', password_confirmation: '' })
     const [error, setError] = useState([]);
     const navigate = useNavigate();
     const handler = (event) => {
@@ -65,15 +65,15 @@ export default function SignUp() {
             <form id="sign-up-form" onSubmit={userData}>
                 <div className='form-group'>
                     <label>Email:</label>
-                    <input type="text" name="email" className="form-control" onChange={handler}></input>
+                    <input value={user.email} type="text" name="email" className="form-control" onChange={handler}></input>
                 </div>
                 <div className='form-group'>
                     <label>Password:</label>
-                    <input type="text" name="password" className="form-control" onChange={handler}></input>
+                    <input value={user.password} type="text" name="password" className="form-control" onChange={handler}></input>
                 </div>
                 <div className='form-group'>
                     <label>Confirm Password:</label>
-                    <input type="text" name="password_confirmation" className="form-control" onChange={handler}></input>
+                    <input value={user.password_confirmation} type="text" name="password_confirmation" className="form-control" onChange={handler}></input>
                 </div>
                 <br />
                 <div className='form-group'>

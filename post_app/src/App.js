@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Post from './components/Post';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -13,7 +12,7 @@ function App() {
     <div>
 
       <Router>
-        {/* <Navbar /> */}
+        <Navbar />
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/posts" element={<Post />} />

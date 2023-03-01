@@ -10,5 +10,6 @@ class User < ApplicationRecord
          jwt_revocation_strategy: self
 
   validates_uniqueness_of :email
+  has_many :posts
 
 end
