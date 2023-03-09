@@ -1,16 +1,19 @@
 class Api::V1::PostsController < ApplicationController
-  # before_action :authenticate_user!
-  before_action :set_post, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_post, only: [:show, :update, :destroy, :update_profile]
 
   # GET /posts
   
 def index
   @posts = Post.all
+  # @posts.attributes
   @posts_with_urls = @posts.map do |post|
     if post.avatar.attached?
-      { post: post, url: url_for(post.avatar), user: post.user.email }
+      post.attributes.merge(url: url_for(post.avatar))
+      # { post: post, url: url_for(post.avatar), user: post.user.email, current_user: current_user}
     else
-       { post: post,url: "", user: post.user.email }
+      post.attributes.merge(user: post.user,current_user_email: current_user.email)
+       # { post: post,url: "", user: post.user,current_user_email: current_user.email }
     end
   end
   render json: @posts_with_urls
@@ -39,6 +42,9 @@ end
     else
       render json: @post.errors, status: :unprocessable_entity
     end
+  end
+
+  def update_profile
   end
 
   # DELETE /posts/1

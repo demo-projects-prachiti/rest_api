@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './css/Post_css.css';
 import * as Icon from 'react-bootstrap-icons';
+import user_logo from './default_user.png'
+import UserProfile from './UserProfile';
 
 export default function Post() {
     const [postData, setPostData] = useState([]);
@@ -12,7 +14,9 @@ export default function Post() {
         const API = "http://localhost:3000/api/v1/posts";
         axios.get(API, { headers: { Authorization: `${localStorage.getItem('Token')}` } })
             .then(res => {
+                console.log("resposen", res.data)
                 setPostData(res.data)
+
             })
             .catch(err => console.log(err))
     }, [])
@@ -35,7 +39,7 @@ export default function Post() {
         //             <td>Description</td>
         //             <td>Avatar</td>
         //         </tr>
-        //         {postData.map((post) => (
+        //         {postData.pmap((post) => (
         //             <tr key={post.post.id}>
         //                 <td>{post.post.title}</td>
         //                 <td>{post.post.description}</td>
@@ -66,26 +70,27 @@ export default function Post() {
                                 </thead>
                                 <tbody>
                                     {postData.map((post) => (
-                                        <tr key={post.post.id}>
+                                        <tr key={post.id}>
                                             <td>
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
-                                                <span className="label label-default">{post.user}</span>
+                                                <img src={user_logo} alt="" />
+
+                                                {post.current_user_email === post.user.email ? <Link to={`/edituser/${post.id}`}>{post.user.email}</Link> : <span className="label label-default">{post.user.email}</span>}
                                             </td>
                                             <td>
-                                                {post.post.created_at}
+                                                {post.created_at}
                                             </td>
                                             <td className="text-center">
-                                                <span className="label label-default">{post.post.title}</span>
+                                                <span className="label label-default">{post.title}</span>
                                             </td>
                                             <td>
-                                                <span className="label label-default">{post.post.description}</span>
+                                                <span className="label label-default">{post.description}</span>
                                             </td>
                                             <td style={{ width: "20%" }}>
-                                                <Link to={`/editpost/${post.post.id}`} className='btn btn-primary'>
+                                                <Link to={`/editpost/${post.id}`} className='btn btn-primary'>
                                                     <Icon.PencilSquare />
                                                 </Link>
-                                                <Link to="#" className='btn btn-primary' onClick={() => deletePost(post.post.id)}><Icon.Trash />
-                                                </Link>                            
+                                                <Link to="#" className='btn btn-primary' onClick={() => deletePost(post.id)}><Icon.Trash />
+                                                </Link>
                                                 <a href="#" className="table-link danger">
                                                     <span className="fa-stack">
                                                         <i className="fa fa-square fa-stack-2x"></i>
@@ -98,7 +103,7 @@ export default function Post() {
                                 </tbody>
                             </table>
                         </div>
-                        <Link to="/addpost" classNameName='btn btn-primary'>Add Post</Link>
+                        <Link to="/addpost" className='btn btn-primary'>Add Post</Link>
                         <ul className="pagination pull-right">
                             <li><a href="#"><i className="fa fa-chevron-left"></i></a></li>
                             <li><a href="#">1</a></li>
